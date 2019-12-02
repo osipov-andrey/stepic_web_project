@@ -10,5 +10,5 @@ mysql -u root -e "create database stepic_web"  # For Stepic
 #mysql -u root -p # For My PC
 
 mysql -u root -e "grant all privileges on stepic_web.* to 'box'@'localhost' with grant option;" 
-python3 /home/box/web/ask/manage.py makemigrations
-python3 /home/box/web/ask/manage.py migrate
+python3 /home/box/web/ask/manage.py makemigrations qa
+python3 /home/box/web/ask/manage.py migrate qa

@@ -11,6 +11,7 @@ class QuestionManager(models.Manager):
         return self.order_by('-rating')
 
 class Question(models.Model):
+    objects = QuestionManager()
     title = models.CharField(max_length=255)
     text = models.TextField(default="")
     added_at = models.DateField(default=timezone.now())
@@ -30,7 +31,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     text = models.TextField(default="")
-    addet_at = models.DateField(default=timezone.now())
+    added_at = models.DateField(default=timezone.now())
     question = models.ForeignKey(Question, default="", on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default="")
 
