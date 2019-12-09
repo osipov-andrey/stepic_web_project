@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {{block.super}} {{ question.title }}
+{% endblock %}
+
+{% block content %}
+    {{ block.super }}
+    <h1>{{ question.title }}</h1>
+    <p>Submitted by {{ question.author }} on {{ question.added_at }}</p>
+    <p>{{ question.text }}</p>
+
+    <hr>
+
+
+    {% if answers %}
+        <div class="answers">
+            {% for answer in answers %}
+                <div class="answer" id="answer_{{ answer.id }}">
+                    <h3>A{{ answer.id }}: {{ answer.author.username }} posted on {{ answer.added_at }}</h3>
+
+                    <p>{{ answer.text }}</p>
+                </div>
+
+                <hr>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No answers posted yet!</p>
+    {% endif %}
+
+{% endblock %}
