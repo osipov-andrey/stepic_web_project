@@ -44,7 +44,7 @@ def index(request, *args, **kwargs):
     question_list = Question.objects.new()
     paginator, page, limit = paginate(request, question_list)
     context = {
-        'question': page,
+        'questions': page,
         'paginator': paginator,
         'limit': limit,
     }

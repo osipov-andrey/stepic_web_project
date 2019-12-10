@@ -20,10 +20,10 @@ from django.conf.urls import url
 urlpatterns = [
     path('', include('qa.urls')),
     path('admin/', admin.site.urls),
-    path('login/', include('qa.urls')),
-    url(r'question\/\d+\/', include('qa.urls')),
-    path('ask/', include('qa.urls')),
-    path('popular/', include('qa.urls')),
-    path('new/', include('qa.urls')),
-    path('signup/', include('qa.urls')),
+    #path('login/', include('qa.urls')),
+    #url(r'question\/\d+\/', include('qa.urls')),
+    #path('ask/', include('qa.urls')),
+    #path('popular/', include('qa.urls')),
+    #path('new/', include('qa.urls')),
+    #path('signup/', include('qa.urls')),
 ]
