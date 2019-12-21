@@ -1,29 +1,31 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Ask - {% endblock %}</title>
-    {% block meta %}
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static "css/css.css" %}">
-    <!--<script src="{% static "js/scripts.js" %}"></script>/-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% endblock %}
-</head>
-<body>
-{% block content %}
-    <div class="navbar">
-        <div class="content">
-        <ul class="navbar--pages">
-            <li><a href="/ask/" class="navbar--pages__link">Ask</a></li>
-            <li><a href="/" class="navbar--pages__link">New</a></li>
-            <li><a href="/popular/" class="navbar--pages__link">Popular</a></li>
-        </ul>
-    </div>
-    <div class="inv"></div>
-{% endblock %}
-{% block scripts %}
-{% endblock %}
-</body>
+    <head>
+        <meta http-equiv="Content-Type"	content="text/html; charset=utf-8">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}">
+        <title>Вопросы и ответы - {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div class="navbar">
+            <header>
+                <h1>Вопросы</h1>
+            </header>
+            <div class=content"></div>
+                <a href="{% url 'new' %}">Главная</a>
+                <a href="{% url 'popular' %}">Популярные</a>
+            </div>
+        </div>
+        <section>
+        {% block content %}
+        {% endblock %}
+        </section>
+	</body>
 </html>
+
+
+
+
+
+

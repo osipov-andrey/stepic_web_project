@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ block.super }} Popular Questions - Page {{ questions.number }}{{ page }}
+    {{ block.super }} Популярные - Страница № {{ questions.number }}{{ page }}
 {% endblock %}
 
 {% block content %}
     {{ block.super }}
-    {% if questions %}
+    <div class="content">
+        <h2>Популярные</h2>
+        {% if questions %}
         <div class="questions">
             {% for question in questions %}
-                <div class="question">
+                <div class="questions--card">
                     <h3>Q{{ question.id }}: {{ question.title }}</h3>
                     <h5>Rating: {{ question.rating }}. Added by {{ question.author.username }}
                         on {{ question.added_at }}</h5>

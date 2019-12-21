@@ -50,7 +50,6 @@ def index(request, *args, **kwargs):
     }
     return render(request, 'index.html', context)
 
-
 def popular(request, *args, **kwargs):
     # list of questions in desc order by rating
     question_list = Question.objects.popular()

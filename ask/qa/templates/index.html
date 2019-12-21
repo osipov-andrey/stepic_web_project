@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ block.super }} New Questions - Page {{ questions.number }}{{ page }}
+  Свежие - Страница № {{ questions.number }}{{ page }}
 {% endblock %}
 
 {% block content %}
     {{ block.super }}
-    </div class="inv"></body>
     <div class="content">
+        <h2>Главная</h2>
     {% if questions %}
         <div class="questions">
             {% for question in questions %}
@@ -37,9 +37,8 @@
            </span>
 
            {% if questions.has_next %}
-               <a href="?page={{ questions.next_page_number }}&limit={{ limit }}">>></a>
+               <a href="?page={{ questions.next_page_number }}&limit={{ limit }}">
            {% endif %}
        </span>
-    </div>
     </div>
 {% endblock %}
