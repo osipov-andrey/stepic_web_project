@@ -1,8 +1,13 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.decorators.http import require_GET
-from .models import Question
 from django.core.paginator import Paginator, EmptyPage
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required  # Проверка пользователя
+from django.views.generic.edit import CreateView
+
+from .models import Question
+from .forms import AskForm, AnswerForm
 
 
 # Create your views here.
@@ -38,6 +43,13 @@ def paginate(request, lst):
 def test(request, *args, **kwargs):
     return HttpResponse("OK")
 
+class AnswerAdd(CreateView):
+    template_name = 'question.html'
+    form_class = AnswerForm
+    success_url = reverse_lazy('new')
+
+
+
 
 @require_GET
 def index(request, *args, **kwargs):
@@ -65,11 +77,30 @@ def popular(request, *args, **kwargs):
 def question(request, pk):
     q = get_object_or_404(Question, id=pk)
     answer_list = q.answer_set.all().order_by('-added_at')
+
+
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('')
+    else:
+        form = AnswerForm()
     context = {
         'question': q,
         'answers': answer_list,
+        'form': form,
     }
     return render(request, 'question.html', context)
 
+def AskAdd(request):
 
-
+    if request.method == 'POST':
+        form = AskForm(request.POST)
+        if form.is_valid():
+            ask = form.save()
+            url = ask.get_url()
+        return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'ask.html', {'form': form})

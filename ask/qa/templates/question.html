@@ -10,7 +10,12 @@
     <h1>{{ question.title }}</h1>
     <p>Submitted by {{ question.author }} on {{ question.added_at }}</p>
     <p>{{ question.text }}</p>
-
+    <h3>Добавление ответа:</h3>
+    <form method="post">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    <input type="submit" value="Добавить">
+    </form>
     <hr>
     {% if answers %}
         <div class="answers">

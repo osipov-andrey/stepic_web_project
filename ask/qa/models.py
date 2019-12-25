@@ -17,7 +17,7 @@ class Question(models.Model):
     added_at = models.DateField(default=timezone.now())
     rating = models.IntegerField(default=0)
     author = models.ForeignKey(User, related_name="question_author", on_delete=models.SET_DEFAULT, default="", null=True)
-    likes = models.ManyToManyField(User, related_name="question_like_user", null=True)
+    likes = models.ManyToManyField(User, related_name="question_like_user", blank=True)
     
     def __str__(self):
         return self.title
