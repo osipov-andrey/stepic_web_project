@@ -1,7 +1,8 @@
+
 from django.conf.urls import url
 from django.urls import path
 
-from web2.ask.qa import views
+from . import views
 
 urlpatterns = [
     path('', views.index, name='new'),

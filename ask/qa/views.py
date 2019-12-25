@@ -80,12 +80,12 @@ def question(request, pk):
 
 
     if request.method == 'POST':
-        form = AnswerForm(request.POST)
+        form = AnswerForm(request.POST, initial={'question': q.id})
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('')
     else:
-        form = AnswerForm()
+        form = AnswerForm(initial={'question': q.id})
     context = {
         'question': q,
         'answers': answer_list,
@@ -100,7 +100,9 @@ def AskAdd(request):
         if form.is_valid():
             ask = form.save()
             url = ask.get_url()
-        return HttpResponseRedirect(url)
+            return HttpResponseRedirect(url)
+        else:
+            return HttpResponse(status='200 OK')
     else:
         form = AskForm()
     return render(request, 'ask.html', {'form': form})
