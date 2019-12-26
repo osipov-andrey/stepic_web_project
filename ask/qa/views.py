@@ -83,7 +83,7 @@ def question(request, pk):
         form = AnswerForm(request.POST, initial={'question': q.id})
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect('')
+        return HttpResponse()
     else:
         form = AnswerForm(initial={'question': q.id})
     context = {
