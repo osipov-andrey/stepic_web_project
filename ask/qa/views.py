@@ -72,15 +72,16 @@ def question(request, pk):
     answer_list = q.answer_set.all().order_by('-id')
     if request.method == 'POST':
         form = AnswerForm(request.POST)
-        form.author = request.user
+        form._user = request.user
+        form._question = q.id
         if form.is_valid():
             form.save()
             url = q.get_url()
             return HttpResponseRedirect(url)
         else:
-            return HttpResponseRedirect('')
+            return HttpResponse()
     else:
-        form = AnswerForm(initial={'question': q.id, 'author': request.user.id})
+        form = AnswerForm()
     context = {
         'question': q,
         'answers': answer_list,
@@ -92,15 +93,15 @@ def question(request, pk):
 def AskAdd(request):
     if request.method == 'POST':
         form = AskForm(request.POST)
-        # form.author = request.user
         if form.is_valid():
+            form._user = request.user
             ask = form.save()
             url = ask.get_url()
             return HttpResponseRedirect(url)
         else:
             return HttpResponse()
     else:
-        form = AskForm(initial={'author': request.user.id})
+        form = AskForm()
     return render(request, 'ask.html', {'form': form})
 
 

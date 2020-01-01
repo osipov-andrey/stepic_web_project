@@ -5,19 +5,53 @@ from django.contrib.auth import authenticate
 from .models import Question, Answer, User
 
 
-class AskForm(ModelForm):
-    #author = forms.CharField(disabled=True)
+class AskForm(forms.Form):
+    title = forms.CharField(label='Title of a question', max_length=250)
+    text = forms.CharField(widget=forms.Textarea)
 
-    class Meta:
-        model = Question
-        fields = ('title', 'text', 'author')
-        # Метод save уже определен и сохраняет модель Meta.model
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if title.strip() == '':
+            raise forms.ValidationError(
+                u'Title is empty', code='validation_error')
+        return title
+
+    def clean_text(self):
+        text = self.cleaned_data['text']
+        if text.strip() == '':
+            raise forms.ValidationError(
+                u'Text is empty', code='validation_error')
+        return text
+
+    def save(self):
+        if self._user.is_anonymous:
+            self.cleaned_data['author_id'] = 1
+        else:
+            self.cleaned_data['author'] = self._user
+        question = Question(**self.cleaned_data)
+        question.save()
+        return question
 
 
-class AnswerForm(ModelForm):
-    class Meta:
-        model = Answer
-        fields = ('text', 'question', 'author')
+class AnswerForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea)
+
+    def clean_text(self):
+        text = self.cleaned_data['text']
+        if text.strip() == '':
+            raise forms.ValidationError(
+                u'Text is empty', code='validation_error')
+        return text
+
+    def save(self):
+        self.cleaned_data['question_id'] = self._question
+        if self._user.is_anonymous:
+            self.cleaned_data['author_id'] = 1
+        else:
+            self.cleaned_data['author'] = self._user
+        answer = Answer(**self.cleaned_data)
+        answer.save()
+        return answer
 
 
 class SignupForm(forms.Form):
