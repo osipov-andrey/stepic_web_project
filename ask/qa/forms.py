@@ -6,6 +6,7 @@ from .models import Question, Answer, User
 
 
 class AskForm(forms.Form):
+    #  Thanks https://github.com/tuda-suda for this form  #
     title = forms.CharField(label='Title of a question', max_length=250)
     text = forms.CharField(widget=forms.Textarea)
 
