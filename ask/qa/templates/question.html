@@ -8,7 +8,11 @@
 {% block content %}
     {{ block.super }}
     <h1>{{ question.title }}</h1>
-    <p>Submitted by {{ question.author }} on {{ question.added_at }}</p>
+    {% if question.author is not None %}
+        <p>Submitted by {{ question.author }} on {{ question.added_at }}</p>
+    {% else %}
+        <p>Submitted by Anonymous User on {{ question.added_at }}</p>
+    {% endif %}
     <p>{{ question.text }}</p>
     <h3>Добавление ответа:</h3>
     <form method="post">

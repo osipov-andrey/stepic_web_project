@@ -12,22 +12,14 @@ class AskForm(forms.Form):
 
     def clean_title(self):
         title = self.cleaned_data['title']
-        if title.strip() == '':
-            raise forms.ValidationError(
-                u'Title is empty', code='validation_error')
         return title
 
     def clean_text(self):
         text = self.cleaned_data['text']
-        if text.strip() == '':
-            raise forms.ValidationError(
-                u'Text is empty', code='validation_error')
         return text
 
     def save(self):
-        if self._user.is_anonymous:
-            self.cleaned_data['author_id'] = 1
-        else:
+        if not self._user.is_anonymous:
             self.cleaned_data['author'] = self._user
         question = Question(**self.cleaned_data)
         question.save()
